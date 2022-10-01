@@ -86,16 +86,17 @@ public class FrmFechaEjemplo03 extends JFrame implements ActionListener {
 	protected void actionPerformedBtnFiltrarJButton(ActionEvent e) {
 		String fecIni = txtFechaInicio.getText().trim();
 		String fecFin = txtFechaFin.getText().trim();
-	
+		
 		if (!fecIni.matches(Validaciones.FECHA)) {
-			mensaje("La fecha de Inicio tiene formato yyyy-MM-dd");
+			mensaje("La Fecha inicio tiene formato yyyy-MM-dd");
 		}else if (!fecFin.matches(Validaciones.FECHA)) {
-			mensaje("La fecha de Fin tiene formato yyyy-MM-dd");
+			mensaje("La Fecha fin tiene formato yyyy-MM-dd");
 		}else if (FechaUtil.isNotSuperiorFechaYYYYMMdd(fecIni, fecFin)) {
-			mensaje("La fecha de Fin es superior a la fecha Inicio");
+			mensaje("La Fecha fin es superior a la Fecha inicio");
 		}else if (FechaUtil.isNotSuperiorSeisMesesFechaYYYYMMdd(fecIni, fecFin)) {
-			mensaje("La fecha fin no debe ser superior a la fecha de Inicio en seis meses");
+			mensaje("La Fecha fin debe ser menor a 6 meses(180 días)");
 		}
+		
 	}
 	
 	public void mensaje(String ms){

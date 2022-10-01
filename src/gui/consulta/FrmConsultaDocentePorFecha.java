@@ -23,6 +23,7 @@ import javax.swing.table.DefaultTableModel;
 
 import entidad.Docente;
 import model.DocenteModel;
+import util.FechaUtil;
 import util.Validaciones;
 
 public class FrmConsultaDocentePorFecha extends JFrame implements ActionListener {
@@ -125,9 +126,13 @@ public class FrmConsultaDocentePorFecha extends JFrame implements ActionListener
 		String fecFin  = txtFin.getText().trim();
 		
 		if (!fecIni.matches(Validaciones.FECHA)) {
-			mensaje("La fecha inicio tiene formato yyyy-MM-dd");
+			mensaje("La Fecha inicio tiene formato yyyy-MM-dd");
 		}else if (!fecFin.matches(Validaciones.FECHA)) {
-			mensaje("La fecha fin tiene formato yyyy-MM-dd");
+			mensaje("La Fecha fin tiene formato yyyy-MM-dd");
+		}else if (FechaUtil.isNotSuperiorFechaYYYYMMdd(fecIni, fecFin)) {
+			mensaje("La Fecha fin es superior a la Fecha inicio");
+		}else if (FechaUtil.isNotSuperiorSeisMesesFechaYYYYMMdd(fecIni, fecFin)) {
+			mensaje("La Fecha fin debe ser menor a 6 meses(180 días)");
 		}else {
 			Date dtFecIni = Date.valueOf(fecIni);
 			Date dtFecFin = Date.valueOf(fecFin);
