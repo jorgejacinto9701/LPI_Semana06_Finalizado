@@ -125,30 +125,7 @@ public class FrmConsultaDocentePorFecha extends JFrame implements ActionListener
 		String fecIni  = txtInicio.getText().trim();
 		String fecFin  = txtFin.getText().trim();
 		
-		if (!fecIni.matches(Validaciones.FECHA)) {
-			mensaje("La Fecha inicio tiene formato yyyy-MM-dd");
-		}else if (!fecFin.matches(Validaciones.FECHA)) {
-			mensaje("La Fecha fin tiene formato yyyy-MM-dd");
-		}else if (FechaUtil.isNotSuperiorFechaYYYYMMdd(fecIni, fecFin)) {
-			mensaje("La Fecha fin es superior a la Fecha inicio");
-		}else if (FechaUtil.isNotSuperiorSeisMesesFechaYYYYMMdd(fecIni, fecFin)) {
-			mensaje("La Fecha fin debe ser menor a 6 meses(180 días)");
-		}else {
-			Date dtFecIni = Date.valueOf(fecIni);
-			Date dtFecFin = Date.valueOf(fecFin);
-			
-			DocenteModel model = new DocenteModel();
-			List<Docente> lista = model.listaDocentePorFecha(dtFecIni, dtFecFin);
-			
-			DefaultTableModel dtm = (DefaultTableModel) table.getModel();
-			dtm.setRowCount(0);
-			
-			for (Docente x : lista) {
-				Object[] fila = {x.getIdDocente(), x.getNombre(), x.getDni(), x.getFechaNacimiento()};
-				dtm.addRow(fila);
-			}
-			
-		}
+		
 	}
 	
 	public void mensaje(String ms){
