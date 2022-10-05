@@ -4,6 +4,7 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -17,6 +18,10 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+
+import entidad.Concurso;
+import model.ConcursoModel;
+import util.Validaciones;
 
 public class FrmConsultaConcursoPorPremio extends JFrame implements ActionListener {
 
@@ -100,6 +105,30 @@ public class FrmConsultaConcursoPorPremio extends JFrame implements ActionListen
 		}
 	}
 	protected void handleBtnFiltrarActionPerformed(ActionEvent arg0) {
+		String preIni = txtDesde.getText().trim();
+		String preFin = txtHasta.getText().trim();
+		
+		if (!preIni.matches(Validaciones.PRECIO)) {
+			mensaje("El precio Inicial es un decimal");	
+		}else if (!preFin.matches(Validaciones.PRECIO)) {
+			mensaje("El precio Final es un decimal");	
+		}else if ( Double.parseDouble(preIni) > Double.parseDouble(preFin) ) {
+			mensaje("El precio Final es un mayor que le precio Inicial");	
+		}else {
+			double dbIni = Double.parseDouble(preIni);
+			double dbFin = Double.parseDouble(preFin);
+			
+			DefaultTableModel dtm = (DefaultTableModel) table.getModel();
+			dtm.setRowCount(0);
+			
+			ConcursoModel model = new ConcursoModel();
+			List<Concurso> lista =  model.listaConcursoPorPremio(dbIni, dbFin);
+			
+			for (Concurso x : lista) {
+				Object[] fila = {x.getIdConcurso(), x.getNombre(), x.getPrecio(), x.getPremio()};
+				dtm.addRow(fila);
+			} 
+		}
 		
 		
 	}
